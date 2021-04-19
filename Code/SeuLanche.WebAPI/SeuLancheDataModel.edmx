@@ -1,0 +1,650 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="SeuLancheDataModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Ingredientes">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Sequencial" Type="smallint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nome" Type="varchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="IngredientesValor">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Sequencial" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SequencialIngrediente" Type="smallint" Nullable="false" />
+          <Property Name="InicioVigencia" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="Valor" Type="decimal" Precision="5" Scale="2" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Lanches">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Sequencial" Type="smallint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nome" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Ativo" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="LanchesIngredientes">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Sequencial" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SequencialLanche" Type="smallint" Nullable="false" />
+          <Property Name="SequencialIngrediente" Type="smallint" Nullable="false" />
+          <Property Name="Quantidade" Type="smallint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Pedidos">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Sequencial" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Inicio" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="Situacao" Type="int" Nullable="false" />
+          <Property Name="Conclusao" Type="datetime2" Precision="7" />
+        </EntityType>
+        <EntityType Name="PedidosLanches">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Sequencial" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SequencialPedido" Type="int" Nullable="false" />
+          <Property Name="SequencialLanche" Type="smallint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PedidosLanchesItens">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Sequencial" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SequencialPedidosLanches" Type="int" Nullable="false" />
+          <Property Name="SequencialIngrediente" Type="smallint" Nullable="false" />
+          <Property Name="Valor" Type="decimal" Precision="13" Scale="2" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PedidosSituacao">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Codigo" Type="int" Nullable="false" />
+          <Property Name="Nome" Type="varchar" MaxLength="30" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Promocoes">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Codigo" Type="int" Nullable="false" />
+          <Property Name="Nome" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Descricao" Type="varchar" MaxLength="8000" Nullable="false" />
+          <Property Name="InicioVigencia" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="FimVigencia" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="Ativo" Type="bit" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'C:\USERS\MARCUS\SOURCE\REPOS\SEULANCHE\SEULANCHE.WEBAPI\APP_DATA\SEULANCHE_DATABASE.MDF.SeuLanche.IngredientesLanche' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="IngredientesLanche">
+          <Key>
+            <PropertyRef Name="SequencialLanche" />
+            <PropertyRef Name="SequencialIngrediente" />
+            <PropertyRef Name="Nome" />
+            <PropertyRef Name="Valor" />
+          </Key>
+          <Property Name="SequencialLanche" Type="smallint" Nullable="false" />
+          <Property Name="SequencialIngrediente" Type="smallint" Nullable="false" />
+          <Property Name="Nome" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Valor" Type="decimal" Precision="5" Scale="2" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'C:\USERS\MARCUS\SOURCE\REPOS\SEULANCHE\SEULANCHE.WEBAPI\APP_DATA\SEULANCHE_DATABASE.MDF.SeuLanche.IngredientesValorVigencia' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="IngredientesValorVigencia">
+          <Key>
+            <PropertyRef Name="SequencialIngrediente" />
+            <PropertyRef Name="Valor" />
+            <PropertyRef Name="Inicio" />
+          </Key>
+          <Property Name="SequencialIngrediente" Type="smallint" Nullable="false" />
+          <Property Name="Valor" Type="decimal" Precision="5" Scale="2" Nullable="false" />
+          <Property Name="Inicio" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="Fim" Type="datetime2" Precision="7" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'C:\USERS\MARCUS\SOURCE\REPOS\SEULANCHE\SEULANCHE.WEBAPI\APP_DATA\SEULANCHE_DATABASE.MDF.SeuLanche.LanchesPreco' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="LanchesPreco">
+          <Key>
+            <PropertyRef Name="SequencialLanche" />
+          </Key>
+          <Property Name="SequencialLanche" Type="smallint" Nullable="false" />
+          <Property Name="Valor" Type="decimal" Precision="38" Scale="2" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'C:\USERS\MARCUS\SOURCE\REPOS\SEULANCHE\SEULANCHE.WEBAPI\APP_DATA\SEULANCHE_DATABASE.MDF.SeuLanche.PedidosPromocoes' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="PedidosPromocoes">
+          <Key>
+            <PropertyRef Name="SequencialPedido" />
+            <PropertyRef Name="Codigo" />
+            <PropertyRef Name="Nome" />
+            <PropertyRef Name="Descricao" />
+          </Key>
+          <Property Name="SequencialPedido" Type="int" Nullable="false" />
+          <Property Name="Codigo" Type="int" Nullable="false" />
+          <Property Name="Nome" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Descricao" Type="varchar" MaxLength="8000" Nullable="false" />
+          <Property Name="Desconto" Type="numeric" Precision="38" Scale="3" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'C:\USERS\MARCUS\SOURCE\REPOS\SEULANCHE\SEULANCHE.WEBAPI\APP_DATA\SEULANCHE_DATABASE.MDF.SeuLanche.PedidosSaldo' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="PedidosSaldo">
+          <Key>
+            <PropertyRef Name="SequencialPedido" />
+            <PropertyRef Name="Nivel" />
+            <PropertyRef Name="Descricao" />
+          </Key>
+          <Property Name="SequencialPedido" Type="int" Nullable="false" />
+          <Property Name="SequencialLanche" Type="int" />
+          <Property Name="ItemId" Type="uniqueidentifier" />
+          <Property Name="Nivel" Type="int" Nullable="false" />
+          <Property Name="Ordem" Type="bigint" />
+          <Property Name="Descricao" Type="varchar" MaxLength="8000" Nullable="false" />
+          <Property Name="Valor" Type="decimal" Precision="38" Scale="3" />
+          <Property Name="Saldo" Type="decimal" Precision="38" Scale="3" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6035: The relationship 'FK_Pedidos_Situacao' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
+        <Association Name="FK_Pedidos_Situacao" />-->
+        <!--Errors Found During Generation:
+warning 6035: The relationship 'FK_PedidosItens_Ingrediente' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
+        <Association Name="FK_PedidosItens_Ingrediente" />-->
+        <!--Errors Found During Generation:
+warning 6035: The relationship 'FK_PedidosItens_Pedido' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
+        <Association Name="FK_PedidosItens_Pedido" />-->
+        <!--Errors Found During Generation:
+warning 6035: The relationship 'FK_PedidosLanches_Pedido' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
+        <Association Name="FK_PedidosLanches_Pedido" />-->
+        <!--Errors Found During Generation:
+warning 6035: The relationship 'FK_PedidosLanches_SequencialLanche' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
+        <Association Name="FK_PedidosLanches_SequencialLanche" />-->
+        <Function Name="Ingrediente" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="SeuLanche" ReturnType="int">
+          <Parameter Name="nome" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="Lanche" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="SeuLanche" ReturnType="int">
+          <Parameter Name="nome" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="PedidoAdicionarIngrediente" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="SeuLanche">
+          <Parameter Name="SequencialPedidoLanche" Type="int" Mode="In" />
+          <Parameter Name="SequencialIngrediente" Type="int" Mode="In" />
+        </Function>
+        <Function Name="PedidoAdicionarLanche" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="SeuLanche">
+          <Parameter Name="SequencialPedido" Type="int" Mode="In" />
+          <Parameter Name="SequencialLanche" Type="int" Mode="In" />
+          <Parameter Name="SequencialPedidoLanche" Type="int" Mode="InOut" />
+        </Function>
+        <Function Name="PedidoAlterarLanche" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="SeuLanche">
+          <Parameter Name="SequencialPedidoLanche" Type="int" Mode="In" />
+          <Parameter Name="SequencialIngrediente" Type="int" Mode="In" />
+          <Parameter Name="Quantidade" Type="int" Mode="In" />
+        </Function>
+        <Function Name="PedidoCriar" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="SeuLanche">
+          <Parameter Name="Sequencial" Type="int" Mode="InOut" />
+        </Function>
+        <Function Name="PedidoDiminuirIngrediente" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="SeuLanche">
+          <Parameter Name="SequencialPedidoLanche" Type="int" Mode="In" />
+          <Parameter Name="SequencialIngrediente" Type="int" Mode="In" />
+        </Function>
+        <Function Name="PedidoEncerrar" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="SeuLanche">
+          <Parameter Name="SequencialPedido" Type="int" Mode="In" />
+          <Parameter Name="FoiConcluido" Type="bit" Mode="In" />
+        </Function>
+        <Function Name="PedidoLimpar" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="SeuLanche">
+          <Parameter Name="SequencialPedido" Type="int" Mode="In" />
+        </Function>
+        <Function Name="PedidoRemoverLanche" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="SeuLanche">
+          <Parameter Name="SequencialPedido" Type="int" Mode="In" />
+          <Parameter Name="SequencialLanche" Type="int" Mode="In" />
+        </Function>
+        <EntityContainer Name="SeuLancheDataModelStoreContainer">
+          <EntitySet Name="Ingredientes" EntityType="Self.Ingredientes" Schema="SeuLanche" store:Type="Tables" />
+          <EntitySet Name="IngredientesValor" EntityType="Self.IngredientesValor" Schema="SeuLanche" store:Type="Tables" />
+          <EntitySet Name="Lanches" EntityType="Self.Lanches" Schema="SeuLanche" store:Type="Tables" />
+          <EntitySet Name="LanchesIngredientes" EntityType="Self.LanchesIngredientes" Schema="SeuLanche" store:Type="Tables" />
+          <EntitySet Name="Pedidos" EntityType="Self.Pedidos" Schema="SeuLanche" store:Type="Tables" />
+          <EntitySet Name="PedidosLanches" EntityType="Self.PedidosLanches" Schema="SeuLanche" store:Type="Tables" />
+          <EntitySet Name="PedidosLanchesItens" EntityType="Self.PedidosLanchesItens" Schema="SeuLanche" store:Type="Tables" />
+          <EntitySet Name="PedidosSituacao" EntityType="Self.PedidosSituacao" Schema="SeuLanche" store:Type="Tables" />
+          <EntitySet Name="Promocoes" EntityType="Self.Promocoes" Schema="SeuLanche" store:Type="Tables" />
+          <EntitySet Name="IngredientesLanche" EntityType="Self.IngredientesLanche" store:Type="Views" store:Schema="SeuLanche">
+            <DefiningQuery>SELECT 
+    [IngredientesLanche].[SequencialLanche] AS [SequencialLanche], 
+    [IngredientesLanche].[SequencialIngrediente] AS [SequencialIngrediente], 
+    [IngredientesLanche].[Nome] AS [Nome], 
+    [IngredientesLanche].[Valor] AS [Valor]
+    FROM [SeuLanche].[IngredientesLanche] AS [IngredientesLanche]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="IngredientesValorVigencia" EntityType="Self.IngredientesValorVigencia" store:Type="Views" store:Schema="SeuLanche">
+            <DefiningQuery>SELECT 
+    [IngredientesValorVigencia].[SequencialIngrediente] AS [SequencialIngrediente], 
+    [IngredientesValorVigencia].[Valor] AS [Valor], 
+    [IngredientesValorVigencia].[Inicio] AS [Inicio], 
+    [IngredientesValorVigencia].[Fim] AS [Fim]
+    FROM [SeuLanche].[IngredientesValorVigencia] AS [IngredientesValorVigencia]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="LanchesPreco" EntityType="Self.LanchesPreco" store:Type="Views" store:Schema="SeuLanche">
+            <DefiningQuery>SELECT 
+    [LanchesPreco].[SequencialLanche] AS [SequencialLanche], 
+    [LanchesPreco].[Valor] AS [Valor]
+    FROM [SeuLanche].[LanchesPreco] AS [LanchesPreco]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="PedidosPromocoes" EntityType="Self.PedidosPromocoes" store:Type="Views" store:Schema="SeuLanche">
+            <DefiningQuery>SELECT 
+    [PedidosPromocoes].[SequencialPedido] AS [SequencialPedido], 
+    [PedidosPromocoes].[Codigo] AS [Codigo], 
+    [PedidosPromocoes].[Nome] AS [Nome], 
+    [PedidosPromocoes].[Descricao] AS [Descricao], 
+    [PedidosPromocoes].[Desconto] AS [Desconto]
+    FROM [SeuLanche].[PedidosPromocoes] AS [PedidosPromocoes]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="PedidosSaldo" EntityType="Self.PedidosSaldo" store:Type="Views" store:Schema="SeuLanche">
+            <DefiningQuery>SELECT 
+    [PedidosSaldo].[SequencialPedido] AS [SequencialPedido], 
+    [PedidosSaldo].[SequencialLanche] AS [SequencialLanche], 
+    [PedidosSaldo].[ItemId] AS [ItemId], 
+    [PedidosSaldo].[Nivel] AS [Nivel], 
+    [PedidosSaldo].[Ordem] AS [Ordem], 
+    [PedidosSaldo].[Descricao] AS [Descricao], 
+    [PedidosSaldo].[Valor] AS [Valor], 
+    [PedidosSaldo].[Saldo] AS [Saldo]
+    FROM [SeuLanche].[PedidosSaldo] AS [PedidosSaldo]</DefiningQuery>
+          </EntitySet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="SeuLancheDataModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Ingredientes">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="Sequencial" Type="Int16" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nome" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityType Name="IngredientesValor">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="Sequencial" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SequencialIngrediente" Type="Int16" Nullable="false" />
+          <Property Name="InicioVigencia" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="Valor" Type="Decimal" Precision="5" Scale="2" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Lanches">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="Sequencial" Type="Int16" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nome" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Ativo" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="LanchesIngredientes">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="Sequencial" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SequencialLanche" Type="Int16" Nullable="false" />
+          <Property Name="SequencialIngrediente" Type="Int16" Nullable="false" />
+          <Property Name="Quantidade" Type="Int16" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Pedidos">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="Sequencial" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Inicio" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="Situacao" Type="Int32" Nullable="false" />
+          <Property Name="Conclusao" Type="DateTime" Precision="7" />
+        </EntityType>
+        <EntityType Name="PedidosLanches">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="Sequencial" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SequencialPedido" Type="Int32" Nullable="false" />
+          <Property Name="SequencialLanche" Type="Int16" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PedidosLanchesItens">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="Sequencial" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SequencialPedidosLanches" Type="Int32" Nullable="false" />
+          <Property Name="SequencialIngrediente" Type="Int16" Nullable="false" />
+          <Property Name="Valor" Type="Decimal" Precision="13" Scale="2" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PedidosSituacao">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="Codigo" Type="Int32" Nullable="false" />
+          <Property Name="Nome" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Promocoes">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="Codigo" Type="Int32" Nullable="false" />
+          <Property Name="Nome" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Descricao" Type="String" MaxLength="8000" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="InicioVigencia" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="FimVigencia" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="Ativo" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="IngredientesLanche">
+          <Key>
+            <PropertyRef Name="SequencialLanche" />
+            <PropertyRef Name="SequencialIngrediente" />
+            <PropertyRef Name="Nome" />
+            <PropertyRef Name="Valor" />
+          </Key>
+          <Property Name="SequencialLanche" Type="Int16" Nullable="false" />
+          <Property Name="SequencialIngrediente" Type="Int16" Nullable="false" />
+          <Property Name="Nome" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Valor" Type="Decimal" Precision="5" Scale="2" Nullable="false" />
+        </EntityType>
+        <EntityType Name="IngredientesValorVigencia">
+          <Key>
+            <PropertyRef Name="SequencialIngrediente" />
+            <PropertyRef Name="Valor" />
+            <PropertyRef Name="Inicio" />
+          </Key>
+          <Property Name="SequencialIngrediente" Type="Int16" Nullable="false" />
+          <Property Name="Valor" Type="Decimal" Precision="5" Scale="2" Nullable="false" />
+          <Property Name="Inicio" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="Fim" Type="DateTime" Precision="7" />
+        </EntityType>
+        <EntityType Name="LanchesPreco">
+          <Key>
+            <PropertyRef Name="SequencialLanche" />
+          </Key>
+          <Property Name="SequencialLanche" Type="Int16" Nullable="false" />
+          <Property Name="Valor" Type="Decimal" Precision="38" Scale="2" />
+        </EntityType>
+        <EntityType Name="PedidosPromocoes">
+          <Key>
+            <PropertyRef Name="SequencialPedido" />
+            <PropertyRef Name="Codigo" />
+            <PropertyRef Name="Nome" />
+            <PropertyRef Name="Descricao" />
+          </Key>
+          <Property Name="SequencialPedido" Type="Int32" Nullable="false" />
+          <Property Name="Codigo" Type="Int32" Nullable="false" />
+          <Property Name="Nome" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Descricao" Type="String" MaxLength="8000" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Desconto" Type="Decimal" Precision="38" Scale="3" />
+        </EntityType>
+        <EntityType Name="PedidosSaldo">
+          <Key>
+            <PropertyRef Name="SequencialPedido" />
+            <PropertyRef Name="Nivel" />
+            <PropertyRef Name="Descricao" />
+          </Key>
+          <Property Name="SequencialPedido" Type="Int32" Nullable="false" />
+          <Property Name="SequencialLanche" Type="Int32" />
+          <Property Name="ItemId" Type="Guid" />
+          <Property Name="Nivel" Type="Int32" Nullable="false" />
+          <Property Name="Ordem" Type="Int64" />
+          <Property Name="Descricao" Type="String" MaxLength="8000" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Valor" Type="Decimal" Precision="38" Scale="3" />
+          <Property Name="Saldo" Type="Decimal" Precision="38" Scale="3" />
+        </EntityType>
+        <EntityContainer Name="SeuLancheContext" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Ingredientes" EntityType="Self.Ingredientes" />
+          <EntitySet Name="IngredientesValor" EntityType="Self.IngredientesValor" />
+          <EntitySet Name="Lanches" EntityType="Self.Lanches" />
+          <EntitySet Name="LanchesIngredientes" EntityType="Self.LanchesIngredientes" />
+          <EntitySet Name="Pedidos" EntityType="Self.Pedidos" />
+          <EntitySet Name="PedidosLanches" EntityType="Self.PedidosLanches" />
+          <EntitySet Name="PedidosLanchesItens" EntityType="Self.PedidosLanchesItens" />
+          <EntitySet Name="PedidosSituacao" EntityType="Self.PedidosSituacao" />
+          <EntitySet Name="Promocoes" EntityType="Self.Promocoes" />
+          <EntitySet Name="IngredientesLanche" EntityType="Self.IngredientesLanche" />
+          <EntitySet Name="IngredientesValorVigencia" EntityType="Self.IngredientesValorVigencia" />
+          <EntitySet Name="LanchesPreco" EntityType="Self.LanchesPreco" />
+          <EntitySet Name="PedidosPromocoes" EntityType="Self.PedidosPromocoes" />
+          <EntitySet Name="PedidosSaldo" EntityType="Self.PedidosSaldo" />
+          <FunctionImport Name="PedidoAdicionarIngrediente">
+            <Parameter Name="SequencialPedidoLanche" Mode="In" Type="Int32" />
+            <Parameter Name="SequencialIngrediente" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="PedidoAdicionarLanche">
+            <Parameter Name="SequencialPedido" Mode="In" Type="Int32" />
+            <Parameter Name="SequencialLanche" Mode="In" Type="Int32" />
+            <Parameter Name="SequencialPedidoLanche" Mode="InOut" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="PedidoAlterarLanche">
+            <Parameter Name="SequencialPedidoLanche" Mode="In" Type="Int32" />
+            <Parameter Name="SequencialIngrediente" Mode="In" Type="Int32" />
+            <Parameter Name="Quantidade" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="PedidoCriar">
+          <Parameter Name="Sequencial" Mode="InOut" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="PedidoDiminuirIngrediente">
+            <Parameter Name="SequencialPedidoLanche" Mode="In" Type="Int32" />
+            <Parameter Name="SequencialIngrediente" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="PedidoEncerrar">
+            <Parameter Name="SequencialPedido" Mode="In" Type="Int32" />
+            <Parameter Name="FoiConcluido" Mode="In" Type="Boolean" />
+          </FunctionImport>
+          <FunctionImport Name="PedidoLimpar">
+          <Parameter Name="SequencialPedido" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="PedidoRemoverLanche">
+            <Parameter Name="SequencialPedido" Mode="In" Type="Int32" />
+            <Parameter Name="SequencialLanche" Mode="In" Type="Int32" />
+          </FunctionImport>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="SeuLancheDataModelStoreContainer" CdmEntityContainer="SeuLancheContext">
+          <EntitySetMapping Name="Ingredientes">
+            <EntityTypeMapping TypeName="SeuLancheDataModel.Ingredientes">
+              <MappingFragment StoreEntitySet="Ingredientes">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Sequencial" ColumnName="Sequencial" />
+                <ScalarProperty Name="Nome" ColumnName="Nome" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="IngredientesValor">
+            <EntityTypeMapping TypeName="SeuLancheDataModel.IngredientesValor">
+              <MappingFragment StoreEntitySet="IngredientesValor">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Sequencial" ColumnName="Sequencial" />
+                <ScalarProperty Name="SequencialIngrediente" ColumnName="SequencialIngrediente" />
+                <ScalarProperty Name="InicioVigencia" ColumnName="InicioVigencia" />
+                <ScalarProperty Name="Valor" ColumnName="Valor" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Lanches">
+            <EntityTypeMapping TypeName="SeuLancheDataModel.Lanches">
+              <MappingFragment StoreEntitySet="Lanches">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Sequencial" ColumnName="Sequencial" />
+                <ScalarProperty Name="Nome" ColumnName="Nome" />
+                <ScalarProperty Name="Ativo" ColumnName="Ativo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LanchesIngredientes">
+            <EntityTypeMapping TypeName="SeuLancheDataModel.LanchesIngredientes">
+              <MappingFragment StoreEntitySet="LanchesIngredientes">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Sequencial" ColumnName="Sequencial" />
+                <ScalarProperty Name="SequencialLanche" ColumnName="SequencialLanche" />
+                <ScalarProperty Name="SequencialIngrediente" ColumnName="SequencialIngrediente" />
+                <ScalarProperty Name="Quantidade" ColumnName="Quantidade" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Pedidos">
+            <EntityTypeMapping TypeName="SeuLancheDataModel.Pedidos">
+              <MappingFragment StoreEntitySet="Pedidos">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Sequencial" ColumnName="Sequencial" />
+                <ScalarProperty Name="Inicio" ColumnName="Inicio" />
+                <ScalarProperty Name="Situacao" ColumnName="Situacao" />
+                <ScalarProperty Name="Conclusao" ColumnName="Conclusao" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PedidosLanches">
+            <EntityTypeMapping TypeName="SeuLancheDataModel.PedidosLanches">
+              <MappingFragment StoreEntitySet="PedidosLanches">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Sequencial" ColumnName="Sequencial" />
+                <ScalarProperty Name="SequencialPedido" ColumnName="SequencialPedido" />
+                <ScalarProperty Name="SequencialLanche" ColumnName="SequencialLanche" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PedidosLanchesItens">
+            <EntityTypeMapping TypeName="SeuLancheDataModel.PedidosLanchesItens">
+              <MappingFragment StoreEntitySet="PedidosLanchesItens">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Sequencial" ColumnName="Sequencial" />
+                <ScalarProperty Name="SequencialPedidosLanches" ColumnName="SequencialPedidosLanches" />
+                <ScalarProperty Name="SequencialIngrediente" ColumnName="SequencialIngrediente" />
+                <ScalarProperty Name="Valor" ColumnName="Valor" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PedidosSituacao">
+            <EntityTypeMapping TypeName="SeuLancheDataModel.PedidosSituacao">
+              <MappingFragment StoreEntitySet="PedidosSituacao">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Codigo" ColumnName="Codigo" />
+                <ScalarProperty Name="Nome" ColumnName="Nome" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Promocoes">
+            <EntityTypeMapping TypeName="SeuLancheDataModel.Promocoes">
+              <MappingFragment StoreEntitySet="Promocoes">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Codigo" ColumnName="Codigo" />
+                <ScalarProperty Name="Nome" ColumnName="Nome" />
+                <ScalarProperty Name="Descricao" ColumnName="Descricao" />
+                <ScalarProperty Name="InicioVigencia" ColumnName="InicioVigencia" />
+                <ScalarProperty Name="FimVigencia" ColumnName="FimVigencia" />
+                <ScalarProperty Name="Ativo" ColumnName="Ativo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="IngredientesLanche">
+            <EntityTypeMapping TypeName="SeuLancheDataModel.IngredientesLanche">
+              <MappingFragment StoreEntitySet="IngredientesLanche">
+                <ScalarProperty Name="SequencialLanche" ColumnName="SequencialLanche" />
+                <ScalarProperty Name="SequencialIngrediente" ColumnName="SequencialIngrediente" />
+                <ScalarProperty Name="Nome" ColumnName="Nome" />
+                <ScalarProperty Name="Valor" ColumnName="Valor" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="IngredientesValorVigencia">
+            <EntityTypeMapping TypeName="SeuLancheDataModel.IngredientesValorVigencia">
+              <MappingFragment StoreEntitySet="IngredientesValorVigencia">
+                <ScalarProperty Name="SequencialIngrediente" ColumnName="SequencialIngrediente" />
+                <ScalarProperty Name="Valor" ColumnName="Valor" />
+                <ScalarProperty Name="Inicio" ColumnName="Inicio" />
+                <ScalarProperty Name="Fim" ColumnName="Fim" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LanchesPreco">
+            <EntityTypeMapping TypeName="SeuLancheDataModel.LanchesPreco">
+              <MappingFragment StoreEntitySet="LanchesPreco">
+                <ScalarProperty Name="SequencialLanche" ColumnName="SequencialLanche" />
+                <ScalarProperty Name="Valor" ColumnName="Valor" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PedidosPromocoes">
+            <EntityTypeMapping TypeName="SeuLancheDataModel.PedidosPromocoes">
+              <MappingFragment StoreEntitySet="PedidosPromocoes">
+                <ScalarProperty Name="SequencialPedido" ColumnName="SequencialPedido" />
+                <ScalarProperty Name="Codigo" ColumnName="Codigo" />
+                <ScalarProperty Name="Nome" ColumnName="Nome" />
+                <ScalarProperty Name="Descricao" ColumnName="Descricao" />
+                <ScalarProperty Name="Desconto" ColumnName="Desconto" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PedidosSaldo">
+            <EntityTypeMapping TypeName="SeuLancheDataModel.PedidosSaldo">
+              <MappingFragment StoreEntitySet="PedidosSaldo">
+                <ScalarProperty Name="SequencialPedido" ColumnName="SequencialPedido" />
+                <ScalarProperty Name="SequencialLanche" ColumnName="SequencialLanche" />
+                <ScalarProperty Name="ItemId" ColumnName="ItemId" />
+                <ScalarProperty Name="Nivel" ColumnName="Nivel" />
+                <ScalarProperty Name="Ordem" ColumnName="Ordem" />
+                <ScalarProperty Name="Descricao" ColumnName="Descricao" />
+                <ScalarProperty Name="Valor" ColumnName="Valor" />
+                <ScalarProperty Name="Saldo" ColumnName="Saldo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="PedidoAdicionarIngrediente" FunctionName="SeuLancheDataModel.Store.PedidoAdicionarIngrediente" />
+          <FunctionImportMapping FunctionImportName="PedidoAdicionarLanche" FunctionName="SeuLancheDataModel.Store.PedidoAdicionarLanche" />
+          <FunctionImportMapping FunctionImportName="PedidoAlterarLanche" FunctionName="SeuLancheDataModel.Store.PedidoAlterarLanche" />
+          <FunctionImportMapping FunctionImportName="PedidoCriar" FunctionName="SeuLancheDataModel.Store.PedidoCriar" />
+          <FunctionImportMapping FunctionImportName="PedidoDiminuirIngrediente" FunctionName="SeuLancheDataModel.Store.PedidoDiminuirIngrediente" />
+          <FunctionImportMapping FunctionImportName="PedidoEncerrar" FunctionName="SeuLancheDataModel.Store.PedidoEncerrar" />
+          <FunctionImportMapping FunctionImportName="PedidoLimpar" FunctionName="SeuLancheDataModel.Store.PedidoLimpar" />
+          <FunctionImportMapping FunctionImportName="PedidoRemoverLanche" FunctionName="SeuLancheDataModel.Store.PedidoRemoverLanche" />
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
